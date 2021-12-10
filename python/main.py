@@ -3,12 +3,12 @@ import time
 
 while True:
     try:
-        posEst = pyautogui.locateOnScreen('python/estimated.png')
+        posEst = pyautogui.locateOnScreen('estimated.png')
         if posEst != None:
             pyautogui.click(posEst[0], posEst[1])
             pyautogui.press('end')
             time.sleep(0.4)
-            posAccept = pyautogui.locateOnScreen('python/confirm.png')
+            posAccept = pyautogui.locateOnScreen('confirm.png')
             pyautogui.click(posAccept[0]+10, posAccept[1]+10)
             print("pressed")
     except:
