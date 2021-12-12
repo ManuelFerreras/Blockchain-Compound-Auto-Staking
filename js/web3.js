@@ -14,6 +14,11 @@ const sJadeAddress = "0x94CEA04C51E7d3EC0a4A97Ac0C3B3c9254c2aD41";
 
 const BUSDAddress = "0xe9e7cea3dedca5984780bafc599bd69add087d56";
 
+const nemesisBlocksText = document.querySelector('#nemesis-blocks');
+const nemesisHoursText = document.querySelector('#nemesis-hours');
+const jadeBlocksText = document.querySelector('#jade-blocks');
+const jadeHoursText = document.querySelector('#jade-hours');
+
 var userAccount;
 var UniswapV2Router02Contract;
 var BUSDContract;
@@ -172,14 +177,11 @@ async function checkBlocks() {
 
     var leftBlocksNemesis = endBlockNemesis - currentBlock;
 
-    console.clear()
-    console.log("/------------------/")
-    console.log("Nemesis Left Blocks: " + leftBlocksNemesis);
-    console.log("Est. Time for Rebase Nemesis: " + (leftBlocksNemesis * 3 / 3600) + " Hours");
-    console.log("/------------------/")
-    console.log("Jade Left Blocks: " + leftBlocksJade);
-    console.log("Est. Time for Rebase Jade: " + (leftBlocksJade * 3 / 3600) + " Hours");
-    console.log("/------------------/")
+    nemesisBlocksText.innerText = `Left Blocks For Rebase: ${leftBlocksNemesis}`
+    jadeBlocksText.innerText = `Left Blocks For Rebase: ${leftBlocksJade}`
+
+    nemesisHoursText.innerText = `Aprox. Hours Left For Rebase: ${leftBlocksNemesis * 3 / 3600} Hours`
+    jadeHoursText.innerText = `Aprox. Hours Left For Rebase: ${leftBlocksJade * 3 / 3600} Hours`
 
     setTimeout(checkBlocks, 5000);
 }
