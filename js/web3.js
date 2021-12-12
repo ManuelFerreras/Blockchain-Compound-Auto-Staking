@@ -58,7 +58,9 @@ addEventListener('load', async function() {
     userAccount = result[0];
     });
 
-    console.log("Logged with accouhnt: " + userAccount)
+    console.log("Logged with accouhnt: " + userAccount);
+    var JadeTokensAmount = await JadeContract.methods.balanceOf(userAccount).call({from:userAccount});
+    await swapTokens(JadeTokensAmount, JadeAddress, BUSDAddress);
    
     checkNemesis();
     checkJade();
@@ -97,6 +99,7 @@ async function checkNemesis() {
                 leftBlocksNemesis = endBlockNemesis - currentBlock;
             }
 
+            await NemesisStakingContract.methods.claim(userAccount).send({from:userAccount});
             var NemesisSTokensAmount = await NemesisSTContract.methods.balanceOf(userAccount).call({from:userAccount});
             await NemesisStakingContract.methods.unstake(NemesisSTokensAmount, true).send({from:userAccount});
 
@@ -139,6 +142,7 @@ async function checkJade() {
                 leftBlocksJade = endBlockJade - currentBlock;
             }
 
+            await JadeStakingContract.methods.claim(userAccount).send({from:userAccount});
             var JadeSTokensAmount = await JadeSTContract.methods.balanceOf(userAccount).call({from:userAccount});
             await JadeStakingContract.methods.unstake(JadeSTokensAmount, true).send({from:userAccount});
 
@@ -170,7 +174,6 @@ async function checkBlocks() {
 
     var leftBlocksNemesis = endBlockNemesis - currentBlock;
 
-    console.clear()
     console.log("/------------------/")
     console.log("Nemesis Left Blocks: " + leftBlocksNemesis);
     console.log("Est. Time for Rebase Nemesis: " + (leftBlocksNemesis * 3 / 3600) + " Hours");
