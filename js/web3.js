@@ -59,8 +59,6 @@ addEventListener('load', async function() {
     });
 
     console.log("Logged with accouhnt: " + userAccount);
-    var JadeTokensAmount = await JadeContract.methods.balanceOf(userAccount).call({from:userAccount});
-    await swapTokens(JadeTokensAmount, JadeAddress, BUSDAddress);
    
     checkNemesis();
     checkJade();
