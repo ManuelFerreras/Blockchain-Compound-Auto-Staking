@@ -172,6 +172,7 @@ async function checkBlocks() {
 
     var leftBlocksNemesis = endBlockNemesis - currentBlock;
 
+    console.clear()
     console.log("/------------------/")
     console.log("Nemesis Left Blocks: " + leftBlocksNemesis);
     console.log("Est. Time for Rebase Nemesis: " + (leftBlocksNemesis * 3 / 3600) + " Hours");
