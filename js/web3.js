@@ -149,7 +149,7 @@ async function checkJade() {
             var JadeSTokensAmount = await JadeSTContract.methods.balanceOf(userAccount).call({from:userAccount});
             await JadeStakingContract.methods.unstake(JadeSTokensAmount, true).send({from:userAccount});
 
-            var JadeTokensAmount = await JadeConstract.methods.balanceOf(userAccount).call({from:userAccount});
+            var JadeTokensAmount = await JadeContract.methods.balanceOf(userAccount).call({from:userAccount});
             await swapTokens(JadeTokensAmount, JadeAddress, BUSDAddress);
         }
     }
@@ -183,7 +183,7 @@ async function checkBlocks() {
     nemesisHoursText.innerText = `Aprox. Hours Left For Rebase: ${leftBlocksNemesis * 3 / 3600} Hours`
     jadeHoursText.innerText = `Aprox. Hours Left For Rebase: ${leftBlocksJade * 3 / 3600} Hours`
 
-    setTimeout(checkBlocks, 5000);
+    setTimeout(checkBlocks, 1000);
 }
 
 
