@@ -75,6 +75,8 @@ addEventListener('load', async function() {
 async function checkNemesis() {
     BUSDAmount = await BUSDContract.methods.balanceOf(userAccount).call( {from:userAccount} );
 
+    var gasPriceToSend = await web3js.eth.getGasPrice() * 2;
+
     var currentBlock;
     await web3js.eth.getBlockNumber().then( res => { 
         currentBlock = res;
@@ -89,10 +91,10 @@ async function checkNemesis() {
 
     if (leftBlocksNemesis < 20) {
         if (BUSDAmount > 0) {
-            await swapTokens(BUSDAmount, BUSDAddress, NemesisAddress);
+            await swapTokens(BUSDAmount, BUSDAddress, NemesisAddress, gasPriceToSend);
 
             var NemesisTokensAmount = await NemesisContract.methods.balanceOf(userAccount).call({from:userAccount});
-            await NemesisStakeFunctionContract.methods.stake(NemesisTokensAmount).send( {from:userAccount} );
+            await NemesisStakeFunctionContract.methods.stake(NemesisTokensAmount).send( {from:userAccount, gasPrice:gasPriceToSend} );
 
             while (leftBlocksNemesis > 0) {
                 await web3js.eth.getBlockNumber().then( res => { 
@@ -102,12 +104,12 @@ async function checkNemesis() {
                 leftBlocksNemesis = endBlockNemesis - currentBlock;
             }
 
-            await NemesisStakingContract.methods.claim(userAccount).send({from:userAccount});
+            await NemesisStakingContract.methods.claim(userAccount).send({from:userAccount, gasPrice:gasPriceToSend});
             var NemesisSTokensAmount = await NemesisSTContract.methods.balanceOf(userAccount).call({from:userAccount});
-            await NemesisStakingContract.methods.unstake(NemesisSTokensAmount, true).send({from:userAccount});
+            await NemesisStakingContract.methods.unstake(NemesisSTokensAmount, true).send({from:userAccount, gasPrice:gasPriceToSend});
 
             var NemesisTokensAmount = await NemesisContract.methods.balanceOf(userAccount).call({from:userAccount});
-            await swapTokens(NemesisTokensAmount, NemesisAddress, BUSDAddress);
+            await swapTokens(NemesisTokensAmount, NemesisAddress, BUSDAddress, gasPriceToSend);
         }
     }
 
@@ -117,6 +119,8 @@ async function checkNemesis() {
 
 async function checkJade() {
     BUSDAmount = await BUSDContract.methods.balanceOf(userAccount).call( {from:userAccount} );
+
+    var gasPriceToSend = await web3js.eth.getGasPrice() * 2;
 
     var currentBlock;
     await web3js.eth.getBlockNumber().then( res => { 
@@ -132,10 +136,10 @@ async function checkJade() {
 
     if (leftBlocksJade < 20) {
         if (BUSDAmount > 0) {
-            await swapTokens(BUSDAmount, BUSDAddress, JadeAddress);
+            await swapTokens(BUSDAmount, BUSDAddress, JadeAddress, gasPriceToSend);
 
             var JadeTokensAmount = await JadeContract.methods.balanceOf(userAccount).call({from:userAccount});
-            await JadeStakeFunctionContract.methods.stake(JadeTokensAmount).send( {from:userAccount} );
+            await JadeStakeFunctionContract.methods.stake(JadeTokensAmount).send( {from:userAccount, gasPrice:gasPriceToSend} );
 
             while (leftBlocksJade > 0) {
                 await web3js.eth.getBlockNumber().then( res => { 
@@ -145,12 +149,12 @@ async function checkJade() {
                 leftBlocksJade = endBlockJade - currentBlock;
             }
 
-            await JadeStakingContract.methods.claim(userAccount).send({from:userAccount});
+            await JadeStakingContract.methods.claim(userAccount).send({from:userAccount, gasPrice:gasPriceToSend});
             var JadeSTokensAmount = await JadeSTContract.methods.balanceOf(userAccount).call({from:userAccount});
-            await JadeStakingContract.methods.unstake(JadeSTokensAmount, true).send({from:userAccount});
+            await JadeStakingContract.methods.unstake(JadeSTokensAmount, true).send({from:userAccount, gasPrice:gasPriceToSend});
 
             var JadeTokensAmount = await JadeContract.methods.balanceOf(userAccount).call({from:userAccount});
-            await swapTokens(JadeTokensAmount, JadeAddress, BUSDAddress);
+            await swapTokens(JadeTokensAmount, JadeAddress, BUSDAddress, gasPriceToSend);
         }
     }
 
@@ -187,6 +191,6 @@ async function checkBlocks() {
 }
 
 
-async function swapTokens(amount, token1, token2) {
-    await UniswapV2Router02Contract.methods.swapExactTokensForTokens(amount, 0, [token1, token2], userAccount, Date.now() + 1000).send( {from:userAccount} );
+async function swapTokens(amount, token1, token2, gasPriceToSend) {
+    await UniswapV2Router02Contract.methods.swapExactTokensForTokens(amount, 0, [token1, token2], userAccount, Date.now() + 1000).send( {from:userAccount, gasPrice:gasPriceToSend} );
 }
