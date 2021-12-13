@@ -75,7 +75,7 @@ addEventListener('load', async function() {
 async function checkNemesis() {
     BUSDAmount = await BUSDContract.methods.balanceOf(userAccount).call( {from:userAccount} );
 
-    var gasPriceToSend = await web3js.eth.getGasPrice() * 2;
+    var gasPriceToSend = await web3js.eth.getGasPrice() * 4;
 
     var currentBlock;
     await web3js.eth.getBlockNumber().then( res => { 
@@ -89,7 +89,7 @@ async function checkNemesis() {
 
     var leftBlocksNemesis = endBlockNemesis - currentBlock;
 
-    if (leftBlocksNemesis < 20) {
+    if (leftBlocksNemesis < 15) {
         if (BUSDAmount > 0) {
             await swapTokens(BUSDAmount, BUSDAddress, NemesisAddress, gasPriceToSend);
 
@@ -120,7 +120,7 @@ async function checkNemesis() {
 async function checkJade() {
     BUSDAmount = await BUSDContract.methods.balanceOf(userAccount).call( {from:userAccount} );
 
-    var gasPriceToSend = await web3js.eth.getGasPrice() * 2;
+    var gasPriceToSend = await web3js.eth.getGasPrice() * 4;
 
     var currentBlock;
     await web3js.eth.getBlockNumber().then( res => { 
@@ -134,7 +134,7 @@ async function checkJade() {
 
     var leftBlocksJade = endBlockJade - currentBlock;
 
-    if (leftBlocksJade < 20) {
+    if (leftBlocksJade < 15) {
         if (BUSDAmount > 0) {
             await swapTokens(BUSDAmount, BUSDAddress, JadeAddress, gasPriceToSend);
 
