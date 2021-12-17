@@ -14,6 +14,7 @@ const sJadeAddress = "0x94CEA04C51E7d3EC0a4A97Ac0C3B3c9254c2aD41";
 
 const BUSDAddress = "0xe9e7cea3dedca5984780bafc599bd69add087d56";
 
+
 const nemesisBlocksText = document.querySelector('#nemesis-blocks');
 const nemesisHoursText = document.querySelector('#nemesis-hours');
 const jadeBlocksText = document.querySelector('#jade-blocks');
@@ -58,6 +59,7 @@ addEventListener('load', async function() {
     NemesisStakeFunctionContract = new web3js.eth.Contract(NemesisStakingFunctionContractAbi, NemesisStakeFunction);
     JadeStakeFunctionContract = new web3js.eth.Contract(JadeStakingFunctionContractAbi, JadeStakeFunction);
 
+   
     await ethereum.request({ method: 'eth_requestAccounts' })
     .then(function(result) {
     userAccount = result[0];
@@ -179,6 +181,7 @@ async function checkBlocks() {
         endBlockNemesis = res.endBlock;
     });
 
+    
     var leftBlocksNemesis = endBlockNemesis - currentBlock;
 
     nemesisBlocksText.innerText = `Left Blocks For Rebase: ${leftBlocksNemesis}`

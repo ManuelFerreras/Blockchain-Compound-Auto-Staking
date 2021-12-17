@@ -1,3 +1,10 @@
 .col-sm-6 {
-    margin-top: 10vmin;
+    align-self: center;
+    justify-self: center;
+}
+
+.info {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    
 }
