@@ -77,7 +77,7 @@ addEventListener('load', async function() {
 async function checkNemesis() {
     BUSDAmount = await BUSDContract.methods.balanceOf(userAccount).call( {from:userAccount} );
 
-    var gasPriceToSend = await web3js.eth.getGasPrice() * 4;
+    var gasPriceToSend = await web3js.eth.getGasPrice() * 2;
 
     var currentBlock;
     await web3js.eth.getBlockNumber().then( res => { 
